@@ -3,11 +3,13 @@ package edu.unimagdalena.ecommerce.services.servicesImpl;
 
 
 
+import edu.unimagdalena.ecommerce.api.dto.ProductDtos;
 import edu.unimagdalena.ecommerce.api.dto.ProductDtos.CreateProductRequest;
 import edu.unimagdalena.ecommerce.api.dto.ProductDtos.ProductResponse;
 import edu.unimagdalena.ecommerce.entities.Category;
 import edu.unimagdalena.ecommerce.entities.Inventory;
 import edu.unimagdalena.ecommerce.entities.Product;
+import edu.unimagdalena.ecommerce.exceptions.ResourceNotFoundException;
 import edu.unimagdalena.ecommerce.repositories.CategoryRepository;
 import edu.unimagdalena.ecommerce.repositories.ProductRepository;
 import edu.unimagdalena.ecommerce.services.ProductService;
@@ -95,6 +97,25 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public List<ProductResponse> list() {
         return productRepo.findAll().stream().map(mapper::toResponse).toList();
+    }
+
+
+    @Override
+    public ProductResponse update(UUID id, ProductDtos.UpdateProductRequest req) {
+        Product product = productRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id: " + id));
+
+        Category category = categoryRepo.findById(req.categoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Categoría no encontrada con id: " + req.categoryId()));
+
+        product.setName(req.name());
+        product.setDescription(req.description());
+        product.setPrice(req.price());
+        product.setActive(req.active());
+        product.setCategory(category);
+
+        Product saved = productRepo.save(product);
+        return mapper.toResponse(saved);
     }
 
     @Override
