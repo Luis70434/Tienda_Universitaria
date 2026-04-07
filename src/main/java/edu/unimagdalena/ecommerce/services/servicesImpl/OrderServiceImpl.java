@@ -140,5 +140,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override public OrderResponse get(UUID id) { return orderRepo.findById(id).map(mapper::toResponse).orElseThrow(); }
+    @Override
+    public List<OrderResponse> list() {
+        return orderRepo.findAll()
+                .stream()
+                .map(mapper::toResponse)
+                .toList();
+    }
     @Override public List<OrderResponse> listByCustomer(UUID customerId) { return orderRepo.findByCustomerId(customerId).stream().map(mapper::toResponse).toList(); }
 }

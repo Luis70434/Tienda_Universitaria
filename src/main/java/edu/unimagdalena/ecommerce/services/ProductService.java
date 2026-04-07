@@ -3,6 +3,7 @@ package edu.unimagdalena.ecommerce.services;
 
 
 
+import edu.unimagdalena.ecommerce.api.dto.ProductDtos;
 import edu.unimagdalena.ecommerce.api.dto.ProductDtos.CreateProductRequest;
 import edu.unimagdalena.ecommerce.api.dto.ProductDtos.ProductResponse;
 
@@ -13,6 +14,7 @@ public interface ProductService {
     ProductResponse create(CreateProductRequest req);
     ProductResponse get(UUID id);
     List<ProductResponse> list();
+    ProductResponse update(UUID id, ProductDtos.UpdateProductRequest req);
     void delete(UUID id);
 
     // Métodos adicionales para cumplir la Regla 6.6

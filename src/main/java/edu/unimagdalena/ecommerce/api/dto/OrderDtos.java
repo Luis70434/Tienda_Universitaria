@@ -1,5 +1,4 @@
 package edu.unimagdalena.ecommerce.api.dto;
-
 import edu.unimagdalena.ecommerce.enums.OrderStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -11,7 +10,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-
 public class OrderDtos {
     public record CreateOrderItemRequest(
             @NotNull UUID productId,

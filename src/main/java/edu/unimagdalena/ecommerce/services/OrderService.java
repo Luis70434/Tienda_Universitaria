@@ -12,5 +12,6 @@ public interface OrderService {
     OrderResponse deliver(UUID id);               //
     OrderResponse cancel(UUID id, CancelOrderRequest req); //
     OrderResponse get(UUID id);
+    List<OrderResponse> list();
     List<OrderResponse> listByCustomer(UUID customerId);
 }

@@ -42,7 +42,7 @@ class ProductServiceImplTest {
 
 
     @Test
-    @DisplayName("Regla 6.1: Debe fallar si el SKU ya existe")
+    @DisplayName("Debe fallar si el SKU ya existe")
     void crearProducto_SkuDuplicado_LanzaExcepcion() {
         CreateProductRequest req = new CreateProductRequest("SKU-DUP", "Nombre", "Desc", new BigDecimal("10"), UUID.randomUUID(), 10, 2);
 
@@ -51,7 +51,7 @@ class ProductServiceImplTest {
         assertThrows(IllegalArgumentException.class, () -> service.create(req));
     }
     @Test
-    @DisplayName("Regla 6.6: Debe filtrar productos con bajo stock")
+    @DisplayName("Debe filtrar productos con bajo stock")
     void consultarBajoStock_FiltraCorrectamente() {
         // Producto 1: Bajo stock (5 <= 10)
         Product p1 = createMockProduct(5, 10);
