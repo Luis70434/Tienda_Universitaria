@@ -1,0 +1,133 @@
+# =========================================================
+# CONFIGURACIÓN BASE
+# =========================================================
+
+BASE_URL=http://localhost:8080
+
+# =========================================================
+#  CUSTOMERS
+# =========================================================
+
+# Crear cliente
+curl -i -X POST "$BASE_URL/api/customers" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Luis","email":"luis@email.com"}'
+
+# Obtener cliente por id
+curl -i -X GET "$BASE_URL/api/customers/1"
+
+# Listar clientes
+curl -i -X GET "$BASE_URL/api/customers"
+
+# Actualizar cliente
+curl -i -X PUT "$BASE_URL/api/customers/1" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Luis Updated","email":"luis@email.com"}'
+
+
+# =========================================================
+#  ADDRESSES
+# =========================================================
+
+# Crear dirección
+curl -i -X POST "$BASE_URL/api/customers/1/addresses" \
+  -H "Content-Type: application/json" \
+  -d '{"street":"Calle 1","city":"Santa Marta"}'
+
+# Listar direcciones
+curl -i -X GET "$BASE_URL/api/customers/1/addresses"
+
+
+# =========================================================
+#  CATEGORIES
+# =========================================================
+
+# Crear categoría
+curl -i -X POST "$BASE_URL/api/categories" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Ropa"}'
+
+# Listar categorías
+curl -i -X GET "$BASE_URL/api/categories"
+
+
+# =========================================================
+#  PRODUCTS
+# =========================================================
+
+# Crear producto
+curl -i -X POST "$BASE_URL/api/products" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Sudadera","sku":"UNI-001","price":80000,"categoryId":"1"}'
+
+# Obtener producto
+curl -i -X GET "$BASE_URL/api/products/1"
+
+# Listar productos
+curl -i -X GET "$BASE_URL/api/products"
+
+# Actualizar producto
+curl -i -X PUT "$BASE_URL/api/products/1" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Sudadera Nueva","price":90000}'
+
+# Actualizar inventario
+curl -i -X PUT "$BASE_URL/api/products/1/inventory" \
+  -H "Content-Type: application/json" \
+  -d '{"available":50,"minimum":5}'
+
+
+# =========================================================
+#  ORDERS
+# =========================================================
+
+# Crear pedido
+curl -i -X POST "$BASE_URL/api/orders" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "customerId":"1",
+    "addressId":"1",
+    "items":[
+      {
+        "productId":"1",
+        "quantity":2
+      }
+    ]
+  }'
+
+# Obtener pedido
+curl -i -X GET "$BASE_URL/api/orders/1"
+
+# Listar pedidos
+curl -i -X GET "$BASE_URL/api/orders"
+
+# Pagar pedido
+curl -i -X PUT "$BASE_URL/api/orders/1/pay"
+
+# Enviar pedido
+curl -i -X PUT "$BASE_URL/api/orders/1/ship"
+
+# Entregar pedido
+curl -i -X PUT "$BASE_URL/api/orders/1/deliver"
+
+# Cancelar pedido
+curl -i -X PUT "$BASE_URL/api/orders/1/cancel" \
+  -H "Content-Type: application/json" \
+  -d '{"reason":"Cancelación de prueba"}'
+
+
+# =========================================================
+# REPORTS
+# =========================================================
+
+# Productos más vendidos
+curl -i -X GET "$BASE_URL/api/reports/best-selling-products?limit=10"
+
+# Ingresos mensuales
+curl -i -X GET "$BASE_URL/api/reports/monthly-income"
+
+# Top clientes
+curl -i -X GET "$BASE_URL/api/reports/top-customers?limit=10"
+
+# Productos con bajo stock
+curl -i -X GET "$BASE_URL/api/reports/low-stock-products"
